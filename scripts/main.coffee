@@ -9,6 +9,8 @@ class DroneModel
     @tilt = Vec2 0, 0
 
   update: ->
+    @_controls()
+
     @vel.add @tilt
     @pos.add @vel
     @tilt.add @vel.multiply(-0.002, yes)
@@ -19,10 +21,28 @@ class DroneModel
     if @vel.length() > DroneModel.VEL_MAX
       @vel.multiply (DroneModel.VEL_MAX / @vel.length())
 
+  # update controls from keyboard
+  _controls: ->
+    thrust = DroneModel.TILT_TYPICAL / 10
+
+    if KeyboardStateHolder.getState 'up'
+      @tilt.add Vec2 0, -thrust
+
+    if KeyboardStateHolder.getState 'down'
+      @tilt.add Vec2 0, +thrust
+
+    if KeyboardStateHolder.getState 'left'
+      @tilt.add Vec2 -thrust, 0
+
+    if KeyboardStateHolder.getState 'right'
+      @tilt.add Vec2 +thrust, 0
+
 $ ->
   console.log 'welcome'
 
   player_drone = new DroneModel 100, 100
+
+  KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
   refresh_display = ->
     player_drone.update()
@@ -42,14 +62,14 @@ $ ->
 
   refresh_display()
 
-  Mousetrap.bind 'up', ->
-    player_drone.tilt.add Vec2 0, -DroneModel.TILT_TYPICAL
+  # Mousetrap.bind 'up', ->
+  #   player_drone.tilt.add Vec2 0, -DroneModel.TILT_TYPICAL
 
-  Mousetrap.bind 'down', ->
-    player_drone.tilt.add Vec2 0, +DroneModel.TILT_TYPICAL
+  # Mousetrap.bind 'down', ->
+  #   player_drone.tilt.add Vec2 0, +DroneModel.TILT_TYPICAL
 
-  Mousetrap.bind 'left', ->
-    player_drone.tilt.add Vec2 -DroneModel.TILT_TYPICAL, 0
+  # Mousetrap.bind 'left', ->
+  #   player_drone.tilt.add Vec2 -DroneModel.TILT_TYPICAL, 0
 
-  Mousetrap.bind 'right', ->
-    player_drone.tilt.add Vec2 +DroneModel.TILT_TYPICAL, 0
+  # Mousetrap.bind 'right', ->
+  #   player_drone.tilt.add Vec2 +DroneModel.TILT_TYPICAL, 0
