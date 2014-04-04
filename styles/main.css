@@ -1,0 +1,16 @@
+#arena {
+  position: relative;
+  width: 800px;
+  height: 600px;
+
+  background-color: #ccc;
+}
+
+.drone {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+
+  background-color: blue;
+  border: 1px solid black;
+}
