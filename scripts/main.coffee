@@ -46,9 +46,9 @@ $ ->
 
   refresh_display = ->
     player_drone.update()
-    $('#debugtext').html "pos: #{player_drone.pos.toString()}<br/>
-                          vel: #{player_drone.vel.toString()}<br/>
-                          tilt: #{player_drone.tilt.toString()}"
+    # $('#debugtext').html "pos: #{player_drone.pos.toString()}<br/>
+    #                       vel: #{player_drone.vel.toString()}<br/>
+    #                       tilt: #{player_drone.tilt.toString()}"
 
     $('.drone').css 'left', "#{player_drone.pos.x}px"
     $('.drone').css 'top', "#{player_drone.pos.y}px"
