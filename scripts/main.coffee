@@ -37,26 +37,50 @@ class DroneModel
     if KeyboardStateHolder.getState 'right'
       @tilt.add Vec2 +thrust, 0
 
+class DroneView
+
+  constructor: (model, id, parent) ->
+    @model = model
+    @id = id
+    @domElement = $ "<div id='#{id}'>"
+    @domElement.css
+      "position": "absolute"
+      "width": "25px"
+      "height": "25px"
+      "background-color": "blue"
+      "border": "1px solid black"
+      
+    $("##{parent}").append @domElement
+
+  update: ->
+    @domElement.css 
+      'left': "#{@model.pos.x}px"
+      'top': "#{@model.pos.y}px"
+      '-webkit-transform': "perspective(50px)
+                            rotateX(#{-@model.vel.y * 10}deg)
+                            rotateY(#{ @model.vel.x * 10}deg)"
+
+class AreaModel
+
+  constructor: (name) ->
+    @color = "#000000"
+    @name = name
+
+  setColor: (color) ->
+    @color = color
+
+
 $ ->
   console.log 'welcome'
 
-  player_drone = new DroneModel 100, 100
+  droneModel = new DroneModel 100, 100
+  droneView = new DroneView droneModel, "drone", "arena"
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
   refresh_display = ->
-    player_drone.update()
-    # $('#debugtext').html "pos: #{player_drone.pos.toString()}<br/>
-    #                       vel: #{player_drone.vel.toString()}<br/>
-    #                       tilt: #{player_drone.tilt.toString()}"
-
-    $('.drone').css 'left', "#{player_drone.pos.x}px"
-    $('.drone').css 'top', "#{player_drone.pos.y}px"
-    # $('.drone').css '-webkit-transform', "rotateX(#{player_drone.vel.x * 10000}deg)"
-    # $('.drone').css '-webkit-transform', "rotateY(#{player_drone.vel.y * 10000}deg)"
-    $('.drone').css '-webkit-transform', "perspective(50px)
-                                          rotateX(#{-player_drone.vel.y * 10}deg)
-                                          rotateY(#{ player_drone.vel.x * 10}deg)"
+    droneModel.update()
+    droneView.update()
 
     window.requestAnimationFrame refresh_display
 
