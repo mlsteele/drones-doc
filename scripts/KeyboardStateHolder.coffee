@@ -15,8 +15,9 @@ window.KeyboardStateHolder =
       Mousetrap.bind key, (-> keySet false), 'keyup'
 
       keySet = (state) ->
-        console.log key, state
+        # console.log key, state
         key_states[key] = state
+        return false
 
   # Check whether a key is currently down.
   # true if the key is subscribed and down

@@ -1,3 +1,8 @@
+html, body { height: 100%; }
+body {
+  margin: 0;
+}
+
 #arena {
   /*margin: 50px auto;*/
 
@@ -9,7 +14,7 @@
 
   background-color: #ccc;
 }
-/*
+
 .drone {
   position: absolute;
   width: 25px;
@@ -17,9 +22,17 @@
 
   background-color: blue;
   border: 1px solid black;
+
+  z-index: 99;
 }
 
-.drone .prop {
+.area {
+  position: absolute;
+  border-width: 2px;
+  border-style: solid;
+}
+
+/*.drone .prop {
   width: 25px;
   height: 25px;
   background-image: url(/images/prop.png);

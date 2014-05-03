@@ -39,18 +39,11 @@ class DroneModel
 
 class DroneView
 
-  constructor: (model, id, parent) ->
+  constructor: (model) ->
     @model = model
-    @id = id
-    @domElement = $ "<div id='#{id}'>"
-    @domElement.css
-      "position": "absolute"
-      "width": "25px"
-      "height": "25px"
-      "background-color": "blue"
-      "border": "1px solid black"
-      
-    $("##{parent}").append @domElement
+    @domElement = $ "<div class='drone'>"
+
+    $("#arena").append @domElement
 
   update: ->
     @domElement.css 
@@ -62,25 +55,84 @@ class DroneView
 
 class AreaModel
 
-  constructor: (name) ->
+  constructor: (x, y, name) ->
+    @size = Vec2 x, y
     @color = "#000000"
     @name = name
+    @pos = Vec2 0, 0
+    @selected = false
 
   setColor: (color) ->
     @color = color
+    @
 
+  setPos: (x, y) ->
+    @pos = Vec2 x, y
+    @
+
+  detectDrone: (droneModel) ->
+    droneX = droneModel.pos.x
+    droneY = droneModel.pos.y
+    if (droneX >= @pos.x && droneX <= (@pos.x + @size.x) && droneY >= @pos.y && droneY <= (@pos.y + @size.y))
+      @selected = true
+      return true
+    @selected = false
+    return false
+
+class AreaView
+
+  constructor: (model) ->
+    @model = model
+    @id = @model.name.replace(" ","-")
+    @domElement = $ "<div class='area'>"
+    $("#arena").append @domElement
+
+  update: ->
+    @domElement.width @model.size.x
+    @domElement.height @model.size.y
+    @domElement.css 
+      'border-color': @model.color
+      'left': "#{@model.pos.x}px"
+      'top': "#{@model.pos.y}px"
+      'box-shadow': "0px 0px 25px #{@model.color}"
+
+    if (!@model.selected)
+      @domElement.css "box-shadow", "0px 0px 10px #{@model.color}"
 
 $ ->
   console.log 'welcome'
 
+  width = $("#arena").width()
+  height = $("#arena").height()
+
   droneModel = new DroneModel 100, 100
-  droneView = new DroneView droneModel, "drone", "arena"
+  droneView = new DroneView droneModel
+
+  areaModels = []
+  areaViews = []
+
+  for i in [0...2]
+    m = new AreaModel 200, 200, "area#{i}"
+    areaModels.push(m)
+    areaViews.push(new AreaView m)
+
+  areaModels[0]
+    .setPos 10, 10
+    .setColor "#FF0000"
+  areaModels[1]
+    .setPos width-210, 10
+    .setColor "#0000FF"
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
   refresh_display = ->
+    $("#arena").height($("html").height())
     droneModel.update()
     droneView.update()
+
+    for areaView in areaViews
+      areaView.model.detectDrone(droneModel)
+      areaView.update()
 
     window.requestAnimationFrame refresh_display
 
