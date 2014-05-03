@@ -45,8 +45,12 @@ class DroneView
 
     $("#arena").append @domElement
 
+    @domElement.sprite
+      fps: 40
+      no_of_frames: 10
+
   update: ->
-    @domElement.css 
+    @domElement.css
       'left': "#{@model.pos.x}px"
       'top': "#{@model.pos.y}px"
       '-webkit-transform': "perspective(50px)
@@ -90,7 +94,7 @@ class AreaView
   update: ->
     @domElement.width @model.size.x
     @domElement.height @model.size.y
-    @domElement.css 
+    @domElement.css
       'border-color': @model.color
       'left': "#{@model.pos.x}px"
       'top': "#{@model.pos.y}px"
