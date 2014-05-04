@@ -22,9 +22,9 @@
   <link href="styles/main.css" rel="stylesheet" />
   <script>
   $(document).ready(function() {
-    // map = L.mapbox.map('arena').setView([-71.0907456278801, 42.359546801327696], 18)
-    // zones = L.mapbox.tileLayer('seveneightn9ne.i57k33on').addTo(map)
     map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on')
+    zones = L.mapbox.featureLayer('seveneightn9ne.i57k33on')//.addTo(map)
+    // map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on')
     map.keyboard.disable()
     // var layer = leafletPip.pointInLayer(L.latLng(50.5, 30.5), zones, true);
 
