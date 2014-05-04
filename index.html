@@ -8,11 +8,28 @@
   <script src="vendor/fancybox/source/jquery.fancybox.pack.js"></script>
   <script src="vendor/rAF.js"></script>
   <script src="vendor/vec2.min.js"></script>
+
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+
+<script src='vendor/leaflet-pip.min.js'></script>
+
   <script src="scripts/KeyboardStateHolder.coffee" type="text/coffeescript"></script>
   <script src="scripts/main.coffee" type="text/coffeescript"></script>
 
+
   <link rel="stylesheet" href="vendor/fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />
-  <link href="styles/main.css" rel="stylesheet"></link>
+  <link href="styles/main.css" rel="stylesheet" />
+  <script>
+  $(document).ready(function() {
+    // map = L.mapbox.map('arena').setView([-71.0907456278801, 42.359546801327696], 18)
+    // zones = L.mapbox.tileLayer('seveneightn9ne.i57k33on').addTo(map)
+    map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on')
+    map.keyboard.disable()
+    // var layer = leafletPip.pointInLayer(L.latLng(50.5, 30.5), zones, true);
+
+  })
+  </script>
 </head>
 <body>
 

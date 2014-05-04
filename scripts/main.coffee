@@ -121,20 +121,20 @@ $ ->
   droneModel = new DroneModel 100, 100
   droneView = new DroneView droneModel
 
-  areaModels = []
-  areaViews = []
+  # areaModels = []
+  # areaViews = []
 
-  for i in [0...2]
-    m = new AreaModel 200, 200, "area#{i}"
-    areaModels.push(m)
-    areaViews.push(new AreaView m)
+  # for i in [0...2]
+  #   m = new AreaModel 200, 200, "area#{i}"
+  #   areaModels.push(m)
+  #   areaViews.push(new AreaView m)
 
-  areaModels[0]
-    .setPos 10, 10
-    .setColor "#FF0000"
-  areaModels[1]
-    .setPos width-210, 10
-    .setColor "#0000FF"
+  # areaModels[0]
+  #   .setPos 10, 10
+  #   .setColor "#FF0000"
+  # areaModels[1]
+  #   .setPos width-210, 10
+  #   .setColor "#0000FF"
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
@@ -154,14 +154,13 @@ $ ->
     $.fancybox.close()
 
   refresh_display = ->
-    $("#arena").height($("html").height())
+    # $("#arena").height($("html").height())
     droneModel.update()
     droneView.update()
 
-    for areaView in areaViews
-      areaView.model.detectDrone(droneModel)
-
-      areaView.update()
+    # for areaView in areaViews
+    #   areaView.model.detectDrone(droneModel)
+    #   areaView.update()
 
     window.requestAnimationFrame refresh_display
 
