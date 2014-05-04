@@ -75,13 +75,22 @@ class AreaModel
     @
 
   detectDrone: (droneModel) ->
+    lastSelected = @selected
+
     droneX = droneModel.pos.x
     droneY = droneModel.pos.y
     if (droneX >= @pos.x && droneX <= (@pos.x + @size.x) && droneY >= @pos.y && droneY <= (@pos.y + @size.y))
       @selected = true
-      return true
-    @selected = false
-    return false
+    else
+      @selected = false
+
+    if @selected and not lastSelected
+      $(document).trigger 'enterArea'
+
+    if not @selected and lastSelected
+      $(document).trigger 'leaveArea'
+
+    return @selected
 
 class AreaView
 
@@ -129,6 +138,21 @@ $ ->
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
+  $(document).on 'enterArea', ->
+    $.fancybox({
+      'autoScale': true,
+      'transitionIn': 'elastic',
+      'transitionOut': 'elastic',
+      'speedIn': 500,
+      'speedOut': 300,
+      'autoDimensions': true,
+      'centerOnScroll': true,
+      'href' : "http://farm4.staticflickr.com/3745/8971419780_cb88b22947_b.jpg"
+    });
+
+  $(document).on 'leaveArea', ->
+    $.fancybox.close()
+
   refresh_display = ->
     $("#arena").height($("html").height())
     droneModel.update()
@@ -136,6 +160,7 @@ $ ->
 
     for areaView in areaViews
       areaView.model.detectDrone(droneModel)
+
       areaView.update()
 
     window.requestAnimationFrame refresh_display
