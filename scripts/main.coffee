@@ -60,9 +60,20 @@ class DroneMarkerView
   @PIXELS_PER_L = 0.00001
 
   constructor: (@model, @map) ->
-    @marker = L.marker @map.getCenter()
-    @marker.setIcon(L.icon({iconUrl: '/images/drone-spritesheet.png'}))
+
+    droneHtmlIcon = new L.HtmlIcon
+      html: "<div class='drone'> </div>"
+
+    @marker = L.marker @map.getCenter(),
+      icon: droneHtmlIcon
+    # @marker.setIcon(L.icon({iconUrl: '/images/drone-spritesheet.png'}))
     @marker.addTo(@map)
+
+    # TODO this will get all drones!
+    @domElement = $('.drone')
+    @domElement.sprite
+      fps: 40
+      no_of_frames: 10
 
     @initialLatLng = @marker.getLatLng()
 
@@ -70,6 +81,11 @@ class DroneMarkerView
     lat = @initialLatLng.lat + DroneMarkerView.PIXELS_PER_L * -@model.pos.y
     lng = @initialLatLng.lng + DroneMarkerView.PIXELS_PER_L * @model.pos.x
     @marker.setLatLng [lat, lng]
+
+    @domElement.css
+      '-webkit-transform': "perspective(50px)
+                            rotateX(#{-@model.vel.y * 10}deg)
+                            rotateY(#{ @model.vel.x * 10}deg)"
 
 class AreaModel
 
@@ -132,7 +148,15 @@ $ ->
   viewCenter = [42.359546801327696, -71.09074294567108]
   viewZoom = 18
   map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
+
+  # disable interactivity
   map.keyboard.disable()
+  map.dragging.disable()
+  map.touchZoom.disable()
+  map.doubleClickZoom.disable()
+  map.scrollWheelZoom.disable()
+  if map.tap then map.tap.disable()
+
   zones = L.geoJson(window.buildings_geojson).addTo(map)
 
   width = $("#arena").width()
