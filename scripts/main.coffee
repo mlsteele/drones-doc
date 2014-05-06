@@ -39,8 +39,7 @@ class DroneModel
 
 class DroneView
 
-  constructor: (model) ->
-    @model = model
+  constructor: (@model) ->
     @domElement = $ "<div class='drone'>"
 
     $("#arena").append @domElement
@@ -56,6 +55,15 @@ class DroneView
       '-webkit-transform': "perspective(50px)
                             rotateX(#{-@model.vel.y * 10}deg)
                             rotateY(#{ @model.vel.x * 10}deg)"
+
+class DroneMarkerView
+
+  constructor: (@model, @map) ->
+    @marker = L.marker(viewCenter).addTo(map)
+    @marker.setIcon(L.icon({iconUrl: '/images/drone-spritesheet.png'}))
+
+  update: ->
+    
 
 class AreaModel
 
@@ -177,3 +185,24 @@ $ ->
 
   # Mousetrap.bind 'right', ->
   #   player_drone.tilt.add Vec2 +DroneModel.TILT_TYPICAL, 0
+  
+  viewCenter = [42.359546801327696, -71.09074294567108]
+  viewZoom = 18
+  map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
+  # // zones = L.mapbox.featureLayer('seveneightn9ne.i57k33on')//.addTo(map)
+  # // map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on')
+  map.keyboard.disable()
+  # // var layer = leafletPip.pointInLayer(L.latLng(50.5, 30.5), zones, true);
+
+  zones = L.geoJson(window.buildings_geojson).addTo(map)
+  # // map.on('click', function(event) {
+  # //   var point = event.latlng
+  # //   var val = leafletPip.pointInLayer(point, zones, true)
+  # //   console.log(val)
+  # // })
+  # zones.on('click', function() {
+  #   console.log('clicked zones')
+  # })
+
+  marker = L.marker(viewCenter).addTo(map);
+  # // marker.setIcon(L.icon({iconUrl: '/images/drone-spritesheet.png'}));
