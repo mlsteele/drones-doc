@@ -1,4 +1,7 @@
-window.buildings_geojson = {
+window.buildings_geojson = {}
+
+window.buildings_geojson['madeleine'] =
+{
   "features": [
     {
       "geometry": {
@@ -61,10 +64,18 @@ window.buildings_geojson = {
         "stroke": "#ff0000",
         "stroke-opacity": 1,
         "stroke-width": 4,
-        "title": "Madeline"
+        "title": "Madeleine"
       },
       "type": "Feature"
-    },
+    }
+  ],
+  "id": "dronebuildings.madeleine",
+  "type": "FeatureCollection"
+}
+
+window.buildings_geojson['chris'] =
+{
+  "features": [
     {
       "geometry": {
         "coordinates": [
@@ -101,10 +112,19 @@ window.buildings_geojson = {
         "stroke": "#f86767",
         "stroke-opacity": 1,
         "stroke-width": 4,
-        "title": "Steve"
+        "title": "Chris"
       },
       "type": "Feature"
-    },
+    }
+  ],
+  "id": "dronebuildings.chris",
+  "type": "FeatureCollection"
+}
+
+
+window.buildings_geojson['andy'] =
+{
+  "features": [
     {
       "geometry": {
         "coordinates": [
@@ -198,6 +218,6 @@ window.buildings_geojson = {
       "type": "Feature"
     }
   ],
-  "id": "seveneightn9ne.i57bk2lb",
+  "id": "dronebuildings.andy",
   "type": "FeatureCollection"
 }

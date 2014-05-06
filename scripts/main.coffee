@@ -163,7 +163,15 @@ $ ->
   map.scrollWheelZoom.disable()
   if map.tap then map.tap.disable()
 
-  zones = L.geoJson(window.buildings_geojson).addTo(map)
+  window.map = map
+  COLOR_MAPPING =
+    'andy': '#f00'
+    'madeleine': '#0f0'
+    'chris': '#00f'
+  zones = {}
+  for name of COLOR_MAPPING
+    zones[name] = L.geoJson(window.buildings_geojson[name]).addTo(map)
+    zones[name].setStyle 'color': COLOR_MAPPING[name]
   marker_layers = []
 
   width = $("#arena").width()
@@ -192,16 +200,16 @@ $ ->
   refresh_display = ->
     droneModel.update()
     droneView.update()
-    inZone = leafletPip.pointInLayer(droneView.point(), zones, true)
+    inZone = leafletPip.pointInLayer(droneView.point(), zones['andy'], true)
     if (inZone.length != 0)
       marker_layers.push polygon_hit inZone[0]
 
     window.requestAnimationFrame refresh_display
 
   has_loaded =
-    "Steve": false
+    "Chris": false
     "Andy": false
-    "Madeline": false
+    "Madeleine": false
   polygon_hit = (polygon) ->
     name = polygon["feature"]["properties"]["title"]
     console.log name
@@ -209,13 +217,13 @@ $ ->
       has_loaded[name] = true
       if name == "Andy"
         j = window.andy_markers
-      else if name == "Madeline"
-        j = window.madeline_markers
+      else if name == "Madeleine"
+        j = window.madeleine_markers
       else
         console.log "Unknown name " + name
         return null
       return L.geoJson(j).addTo(map)
 
 
-    
+
   refresh_display()
