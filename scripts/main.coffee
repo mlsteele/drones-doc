@@ -57,13 +57,19 @@ class DroneView
                             rotateY(#{ @model.vel.x * 10}deg)"
 
 class DroneMarkerView
+  @PIXELS_PER_L = 0.00001
 
   constructor: (@model, @map) ->
-    @marker = L.marker(viewCenter).addTo(map)
+    @marker = L.marker @map.getCenter()
     @marker.setIcon(L.icon({iconUrl: '/images/drone-spritesheet.png'}))
+    @marker.addTo(@map)
+
+    @initialLatLng = @marker.getLatLng()
 
   update: ->
-    
+    lat = @initialLatLng.lat + DroneMarkerView.PIXELS_PER_L * -@model.pos.y
+    lng = @initialLatLng.lng + DroneMarkerView.PIXELS_PER_L * @model.pos.x
+    @marker.setLatLng [lat, lng]
 
 class AreaModel
 
@@ -123,11 +129,17 @@ class AreaView
 $ ->
   console.log 'welcome'
 
+  viewCenter = [42.359546801327696, -71.09074294567108]
+  viewZoom = 18
+  map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
+  map.keyboard.disable()
+  zones = L.geoJson(window.buildings_geojson).addTo(map)
+
   width = $("#arena").width()
   height = $("#arena").height()
 
   droneModel = new DroneModel 100, 100
-  droneView = new DroneView droneModel
+  droneView = new DroneMarkerView droneModel, map
 
   # areaModels = []
   # areaViews = []
@@ -185,16 +197,16 @@ $ ->
 
   # Mousetrap.bind 'right', ->
   #   player_drone.tilt.add Vec2 +DroneModel.TILT_TYPICAL, 0
-  
-  viewCenter = [42.359546801327696, -71.09074294567108]
-  viewZoom = 18
-  map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
+
+  # viewCenter = [42.359546801327696, -71.09074294567108]
+  # viewZoom = 18
+  # map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
   # // zones = L.mapbox.featureLayer('seveneightn9ne.i57k33on')//.addTo(map)
   # // map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on')
-  map.keyboard.disable()
+  # map.keyboard.disable()
   # // var layer = leafletPip.pointInLayer(L.latLng(50.5, 30.5), zones, true);
 
-  zones = L.geoJson(window.buildings_geojson).addTo(map)
+  # zones = L.geoJson(window.buildings_geojson).addTo(map)
   # // map.on('click', function(event) {
   # //   var point = event.latlng
   # //   var val = leafletPip.pointInLayer(point, zones, true)
@@ -204,5 +216,5 @@ $ ->
   #   console.log('clicked zones')
   # })
 
-  marker = L.marker(viewCenter).addTo(map);
+  # marker = L.marker(viewCenter).addTo(map);
   # // marker.setIcon(L.icon({iconUrl: '/images/drone-spritesheet.png'}));
