@@ -208,10 +208,11 @@ $ ->
       if (inZone.length != 0)
         marker_layers.push polygon_hit inZone[0]
 
-      for marker_layer in marker_layers
-        onLayer = leafletPip.pointInLayer(droneView.point(), marker_layer, true)
-        if onLayer.length != 0
-          marker_hit onLayer[0]
+      # for marker_layer in marker_layers
+      #   console.log marker_layers
+      #   onLayer = leafletPip.pointInLayer(droneView.point(), marker_layer, true)
+      #   if onLayer.length != 0
+      #     marker_hit onLayer[0]
 
     window.requestAnimationFrame refresh_display
 
