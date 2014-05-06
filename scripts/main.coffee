@@ -57,7 +57,8 @@ class DroneView
                             rotateY(#{ @model.vel.x * 10}deg)"
 
 class DroneMarkerView
-  @PIXELS_PER_L = 0.00001
+  @PIXELS_PER_LAT = 0.000007
+  @PIXELS_PER_LNG = 0.00001
 
   constructor: (@model, @map) ->
 
@@ -78,8 +79,8 @@ class DroneMarkerView
     @initialLatLng = @marker.getLatLng()
 
   update: ->
-    lat = @initialLatLng.lat + DroneMarkerView.PIXELS_PER_L * -@model.pos.y
-    lng = @initialLatLng.lng + DroneMarkerView.PIXELS_PER_L * @model.pos.x
+    lat = @initialLatLng.lat + DroneMarkerView.PIXELS_PER_LAT * -@model.pos.y
+    lng = @initialLatLng.lng + DroneMarkerView.PIXELS_PER_LNG * @model.pos.x
     @marker.setLatLng [lat, lng]
 
     @domElement.css
@@ -151,7 +152,7 @@ $ ->
     $("#intro").hide()
     return false
 
-  viewCenter = [42.3612, -71.0904]
+  viewCenter = [42.3609, -71.0904]
   viewZoom = 18
   map = L.mapbox.map('arena', 'seveneightn9ne.i60f72a6').setView(viewCenter, viewZoom)
 
