@@ -54,10 +54,11 @@ window.buildings_geojson = {
       },
       "properties": {
         "description": "",
-        "fill": "#1087bf",
+        "fill": "#ff0000",
+        "color": "#ff0000",
         "fill-opacity": 0.2,
         "id": "marker-hurpuj5q6",
-        "stroke": "#1087bf",
+        "stroke": "#ff0000",
         "stroke-opacity": 1,
         "stroke-width": 4,
         "title": "Madeline"

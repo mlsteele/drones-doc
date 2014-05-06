@@ -86,6 +86,8 @@ class DroneMarkerView
       '-webkit-transform': "perspective(50px)
                             rotateX(#{-@model.vel.y * 10}deg)
                             rotateY(#{ @model.vel.x * 10}deg)"
+  point: ->
+    @marker.getLatLng()
 
 class AreaModel
 
@@ -146,7 +148,7 @@ $ ->
   console.log 'welcome'
 
   viewCenter = [42.359546801327696, -71.09074294567108]
-  viewZoom = 18
+  viewZoom = 17
   map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
 
   # disable interactivity
@@ -201,7 +203,12 @@ $ ->
     # $("#arena").height($("html").height())
     droneModel.update()
     droneView.update()
-
+    # console.log(droneView.point())
+    val = leafletPip.pointInLayer(droneView.point(), zones, true)
+    # if (val != [])
+    if (val.length != 0)
+      console.log(val)
+    # console.log(val)
     # for areaView in areaViews
     #   areaView.model.detectDrone(droneModel)
     #   areaView.update()

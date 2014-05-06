@@ -1,1 +1,60 @@
-{"features":[{"geometry":{"coordinates":[-71.08761548995972,42.360862814324015],"type":"Point"},"properties":{"description":"","id":"marker-hurotdt92","marker-color":"#1087bf","marker-size":"large","marker-symbol":"heliport","title":"Madeline"},"type":"Feature"},{"geometry":{"coordinates":[-71.0904586315155,42.36168332654938],"type":"Point"},"properties":{"description":"","id":"marker-hurovo4s3","marker-color":"#f1f075","marker-size":"large","marker-symbol":"park","title":"Andy"},"type":"Feature"},{"geometry":{"coordinates":[-71.09329640865326,42.359503198015716],"type":"Point"},"properties":{"description":"","id":"marker-huroz7py4","marker-color":"#f86767","marker-size":"large","marker-symbol":"rocket","title":"Steve"},"type":"Feature"}],"id":"seveneightn9ne.i57bk2lb","type":"FeatureCollection"}
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          -71.08761548995972,
+          42.360862814324015
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "",
+        "id": "marker-hurotdt92",
+        "marker-color": "#1087bf",
+        "marker-size": "large",
+        "marker-symbol": "heliport",
+        "title": "Madeline"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -71.0904586315155,
+          42.36168332654938
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "",
+        "id": "marker-hurovo4s3",
+        "marker-color": "#f1f075",
+        "marker-size": "large",
+        "marker-symbol": "park",
+        "title": "Andy"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -71.09329640865326,
+          42.359503198015716
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "",
+        "id": "marker-huroz7py4",
+        "marker-color": "#f86767",
+        "marker-size": "large",
+        "marker-symbol": "rocket",
+        "title": "Steve"
+      },
+      "type": "Feature"
+    }
+  ],
+  "id": "seveneightn9ne.i57bk2lb",
+  "type": "FeatureCollection"
+}
