@@ -1,4 +1,4 @@
-window.madeline_markers = {
+window.madeleine_markers = {
   "features": [
     {
       "geometry": {
@@ -159,5 +159,5 @@ video_ids = [
   "94120312"
 ]
 for (i=0; i<video_ids.length; i++) {
-  window.madeline_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  window.madeleine_markers["features"][i]["properties"]["video-id"] = video_ids[i]
 }

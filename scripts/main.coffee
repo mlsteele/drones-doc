@@ -90,73 +90,60 @@ class DroneMarkerView
   point: ->
     @marker.getLatLng()
 
-class AreaModel
+# class AreaModel
+#   constructor: (x, y, name) ->
+#     @size = Vec2 x, y
+#     @color = "#000000"
+#     @name = name
+#     @pos = Vec2 0, 0
+#     @selected = false
 
-  constructor: (x, y, name) ->
-    @size = Vec2 x, y
-    @color = "#000000"
-    @name = name
-    @pos = Vec2 0, 0
-    @selected = false
+#   setColor: (color) ->
+#     @color = color
+#     @
 
-  setColor: (color) ->
-    @color = color
-    @
+#   setPos: (x, y) ->
+#     @pos = Vec2 x, y
+#     @
 
-  setPos: (x, y) ->
-    @pos = Vec2 x, y
-    @
+#   detectDrone: (droneModel) ->
+#     lastSelected = @selected
 
-  detectDrone: (droneModel) ->
-    lastSelected = @selected
+#     droneX = droneModel.pos.x
+#     droneY = droneModel.pos.y
+#     if (droneX >= @pos.x && droneX <= (@pos.x + @size.x) && droneY >= @pos.y && droneY <= (@pos.y + @size.y))
+#       @selected = true
+#     else
+#       @selected = false
 
-    droneX = droneModel.pos.x
-    droneY = droneModel.pos.y
-    if (droneX >= @pos.x && droneX <= (@pos.x + @size.x) && droneY >= @pos.y && droneY <= (@pos.y + @size.y))
-      @selected = true
-    else
-      @selected = false
+#     if @selected and not lastSelected
+#       $(document).trigger 'enterArea'
 
-    if @selected and not lastSelected
-      $(document).trigger 'enterArea'
+#     if not @selected and lastSelected
+#       $(document).trigger 'leaveArea'
 
-    if not @selected and lastSelected
-      $(document).trigger 'leaveArea'
+#     return @selected
 
-    return @selected
+# class AreaView
+#   constructor: (model) ->
+#     @model = model
+#     @id = @model.name.replace(" ","-")
+#     @domElement = $ "<div class='area'>"
+#     $("#arena").append @domElement
 
-class AreaView
+#   update: ->
+#     @domElement.width @model.size.x
+#     @domElement.height @model.size.y
+#     @domElement.css
+#       'border-color': @model.color
+#       'left': "#{@model.pos.x}px"
+#       'top': "#{@model.pos.y}px"
+#       'box-shadow': "0px 0px 25px #{@model.color}"
 
-  constructor: (model) ->
-    @model = model
-    @id = @model.name.replace(" ","-")
-    @domElement = $ "<div class='area'>"
-    $("#arena").append @domElement
+#     if (!@model.selected)
+#       @domElement.css "box-shadow", "0px 0px 10px #{@model.color}"
 
-  update: ->
-    @domElement.width @model.size.x
-    @domElement.height @model.size.y
-    @domElement.css
-      'border-color': @model.color
-      'left': "#{@model.pos.x}px"
-      'top': "#{@model.pos.y}px"
-      'box-shadow': "0px 0px 25px #{@model.color}"
-
-    if (!@model.selected)
-      @domElement.css "box-shadow", "0px 0px 10px #{@model.color}"
-
-$ ->
-  console.log 'welcome'
-
-  $("#continue").click ->
-    $("#intro").hide()
-    return false
-
-  viewCenter = [42.3609, -71.0904]
-  viewZoom = 18
-  map = L.mapbox.map('arena', 'seveneightn9ne.i60f72a6').setView(viewCenter, viewZoom)
-
-  # disable interactivity
+disable_map_interactivity = (map) ->
   map.keyboard.disable()
   map.dragging.disable()
   map.touchZoom.disable()
@@ -164,50 +151,50 @@ $ ->
   map.scrollWheelZoom.disable()
   if map.tap then map.tap.disable()
 
-  pause_animation = false
 
-  window.map = map
-  COLOR_MAPPING =
-    'andy': '#f00'
-    'madeleine': '#0f0'
-    'chris': '#00f'
-  zones = {}
-  for name of COLOR_MAPPING
-    zones[name] = L.geoJson(window.buildings_geojson[name]).addTo(map)
-    zones[name].setStyle 'color': COLOR_MAPPING[name]
-  marker_layers = []
+$ ->
+  console.log 'welcome'
 
-  width = $("#arena").width()
-  height = $("#arena").height()
-
-  droneModel = new DroneModel 100, 100
-  droneView = new DroneMarkerView droneModel, map
+  # introduction
+  $("#continue").click ->
+    $("#intro").hide()
+    return false
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
-  $(document).on 'enterArea', ->
-    $.fancybox({
-      'autoScale': true,
-      'transitionIn': 'elastic',
-      'transitionOut': 'elastic',
-      'speedIn': 500,
-      'speedOut': 300,
-      'autoDimensions': true,
-      'centerOnScroll': true,
-      'href' : "http://farm4.staticflickr.com/3745/8971419780_cb88b22947_b.jpg"
-    });
+  # setup map
+  viewCenter = [42.3609, -71.0904]
+  viewZoom = 18
+  map = L.mapbox.map('arena', 'seveneightn9ne.i60f72a6').setView(viewCenter, viewZoom)
+  disable_map_interactivity(map)
 
-  $(document).on 'leaveArea', ->
-    $.fancybox.close()
+  # create game objects
+  droneModel = new DroneModel 100, 100
+  droneView = new DroneMarkerView droneModel, map
 
+  # add zones
+  zones = {}
+  for name of window.people
+    zone_color = window.people[name].zone_color
+    zones[name] = L.geoJson(window.buildings_geojson[name]).addTo(map)
+    zones[name].setStyle 'color': zone_color
+
+  marker_layers = []
+
+  drone_running = true
   refresh_display = ->
-    # console.log pause_animation
-    if not pause_animation
+    window.requestAnimationFrame refresh_display
+    if drone_running
       droneModel.update()
       droneView.update()
-      inZone = leafletPip.pointInLayer(droneView.point(), zones['andy'], true)
-      if (inZone.length != 0)
-        marker_layers.push polygon_hit inZone[0]
+
+      # check whether the drone is in a zone
+      for name of window.people
+        zone = zones[name]
+        inZone = leafletPip.pointInLayer(droneView.point(), zone, true)
+        if (inZone.length != 0)
+          # a hit, a very palpable hit!
+          marker_layers.push on_zone_hit name
 
       # for marker_layer in marker_layers
       #   console.log marker_layers
@@ -215,35 +202,35 @@ $ ->
       #   if onLayer.length != 0
       #     marker_hit onLayer[0]
 
-    window.requestAnimationFrame refresh_display
+  # record which zones have already been visited
+  already_visited_zone = {}
 
-  has_loaded =
-    "Chris": false
-    "Andy": false
-    "Madeleine": false
-  polygon_hit = (polygon) ->
-    name = polygon["feature"]["properties"]["title"]
-    console.log name
-    if not has_loaded[name]
-      has_loaded[name] = true
-      if name == "Andy"
-        j = window.andy_markers
-        v = "94133250"
-      else if name == "Madeleine"
-        j = window.madeleine_markers
-        v = "94120142"
-      else
-        console.log "Unknown name " + name
-        return null
+  on_zone_hit = (name) ->
+    # console.log "inside #{name} zone"
+    unless already_visited_zone[name]?
+      # mark the zone as visited
+      already_visited_zone[name] = true
+      show_markers(name)
+      show_video window.people[name].videos['intro-video'].vimeo_id
 
-      show_video v
-      return L.geoJson(j).addTo(map)
+  # make somebodies markers appear
+  show_markers = (name) ->
+    if name is "andy"
+      markers_data = window.andy_markers
+    else if name is "madeleine"
+      markers_data = window.madeleine_markers
+    else
+      console.error "Unknown name " + name
+
+    return L.geoJson(markers_data).addTo(map)
+
 
   marker_hit = (marker) ->
     # TODO
 
+  # display a vimeo video
   show_video = (id) ->
-    pause_animation = true
+    drone_running = false
     $.fancybox({
       'helpers': {
         'media': {}
@@ -257,8 +244,10 @@ $ ->
       'centerOnScroll': true,
       'href' : "http://vimeo.com/" + id,
       'afterClose': ->
-        pause_animation = false
+        drone_running = true
         return true
       })
 
+
+  # start the main loop
   refresh_display()
