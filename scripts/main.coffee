@@ -147,6 +147,10 @@ class AreaView
 $ ->
   console.log 'welcome'
 
+  $("#continue").click ->
+    $("#intro").hide()
+    return false
+
   viewCenter = [42.359546801327696, -71.09074294567108]
   viewZoom = 17
   map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
