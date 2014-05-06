@@ -160,6 +160,7 @@ $ ->
   if map.tap then map.tap.disable()
 
   zones = L.geoJson(window.buildings_geojson).addTo(map)
+  marker_layers = []
 
   width = $("#arena").width()
   height = $("#arena").height()
@@ -204,17 +205,36 @@ $ ->
     droneModel.update()
     droneView.update()
     # console.log(droneView.point())
-    val = leafletPip.pointInLayer(droneView.point(), zones, true)
+    inZone = leafletPip.pointInLayer(droneView.point(), zones, true)
     # if (val != [])
-    if (val.length != 0)
-      console.log(val)
+    if (inZone.length != 0)
+      marker_layers.push polygon_hit inZone[0]
     # console.log(val)
     # for areaView in areaViews
     #   areaView.model.detectDrone(droneModel)
     #   areaView.update()
-
     window.requestAnimationFrame refresh_display
 
+  has_loaded =
+    "Steve": false
+    "Andy": false
+    "Madeline": false
+  polygon_hit = (polygon) ->
+    name = polygon["feature"]["properties"]["title"]
+    console.log name
+    if not has_loaded[name]
+      has_loaded[name] = true
+      if name == "Andy"
+        j = window.andy_markers
+      else if name == "Madeline"
+        j = window.madeline_markers
+      else
+        console.log "Unknown name " + name
+        return null
+      return L.geoJson(j).addTo(map)
+
+
+    
   refresh_display()
 
   # Mousetrap.bind 'up', ->
