@@ -163,6 +163,8 @@ $ ->
   map.scrollWheelZoom.disable()
   if map.tap then map.tap.disable()
 
+  pause_animation = false
+
   window.map = map
   COLOR_MAPPING =
     'andy': '#f00'
@@ -198,11 +200,18 @@ $ ->
     $.fancybox.close()
 
   refresh_display = ->
-    droneModel.update()
-    droneView.update()
-    inZone = leafletPip.pointInLayer(droneView.point(), zones['andy'], true)
-    if (inZone.length != 0)
-      marker_layers.push polygon_hit inZone[0]
+    # console.log pause_animation
+    if not pause_animation
+      droneModel.update()
+      droneView.update()
+      inZone = leafletPip.pointInLayer(droneView.point(), zones['andy'], true)
+      if (inZone.length != 0)
+        marker_layers.push polygon_hit inZone[0]
+
+      for marker_layer in marker_layers
+        onLayer = leafletPip.pointInLayer(droneView.point(), marker_layer, true)
+        if onLayer.length != 0
+          marker_hit onLayer[0]
 
     window.requestAnimationFrame refresh_display
 
@@ -217,13 +226,37 @@ $ ->
       has_loaded[name] = true
       if name == "Andy"
         j = window.andy_markers
+        v = "94133250"
       else if name == "Madeleine"
         j = window.madeleine_markers
+        v = "94120142"
       else
         console.log "Unknown name " + name
         return null
+
+      show_video v
       return L.geoJson(j).addTo(map)
 
+  marker_hit = (marker) ->
+    # TODO
 
+  show_video = (id) ->
+    pause_animation = true
+    $.fancybox({
+      'helpers': {
+        'media': {}
+      }
+      'autoScale': true,
+      'transitionIn': 'elastic',
+      'transitionOut': 'elastic',
+      'speedIn': 500,
+      'speedOut': 300,
+      'autoDimensions': true,
+      'centerOnScroll': true,
+      'href' : "http://vimeo.com/" + id,
+      'afterClose': ->
+        pause_animation = false
+        return true
+      })
 
   refresh_display()
