@@ -14,8 +14,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94120312"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -33,8 +32,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94120146"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -52,8 +50,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94120144"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -71,8 +68,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94120141"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -90,8 +86,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94120140"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -109,8 +104,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94121053"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -128,8 +122,7 @@ window.madeline_markers = {
         "marker-color": "#9c89cc",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94133251"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -154,4 +147,17 @@ window.madeline_markers = {
   ],
   "id": "seveneightn9ne.i5pp9ic8",
   "type": "FeatureCollection"
+}
+
+video_ids = [
+  "94133251",
+  "94121053",
+  "94120140",
+  "94120141",
+  "94120144",
+  "94120146",
+  "94120312"
+]
+for (i=0; i<video_ids.length; i++) {
+  window.madeline_markers["features"][i]["properties"]["video-id"] = video_ids[i]
 }

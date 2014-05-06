@@ -14,8 +14,7 @@ window.andy_markers = {
         "marker-color": "#f1f075",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94127285"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -33,8 +32,7 @@ window.andy_markers = {
         "marker-color": "#f1f075",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94127399"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -52,8 +50,7 @@ window.andy_markers = {
         "marker-color": "#f1f075",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94127335"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -71,8 +68,7 @@ window.andy_markers = {
         "marker-color": "#f1f075",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94127569"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -90,8 +86,7 @@ window.andy_markers = {
         "marker-color": "#f1f075",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94127568"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -109,8 +104,7 @@ window.andy_markers = {
         "marker-color": "#f1f075",
         "marker-size": "medium",
         "marker-symbol": "",
-        "title": "",
-        "video-id": "94127567"
+        "title": ""
       },
       "type": "Feature"
     },
@@ -135,4 +129,16 @@ window.andy_markers = {
   ],
   "id": "seveneightn9ne.i5pi77en",
   "type": "FeatureCollection"
+}
+
+video_ids = [
+  "94127567",
+  "94127568",
+  "94127569",
+  "94127335",
+  "94127399",
+  "94127285",
+]
+for (i=0; i<video_ids.length; i++) {
+  window.andy_markers["features"][i]["properties"]["video-id"] = video_ids[i]
 }
