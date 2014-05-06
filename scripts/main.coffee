@@ -151,8 +151,8 @@ $ ->
     $("#intro").hide()
     return false
 
-  viewCenter = [42.359546801327696, -71.09074294567108]
-  viewZoom = 17
+  viewCenter = [42.3612, -71.0904]
+  viewZoom = 18
   map = L.mapbox.map('arena', 'seveneightn9ne.i57k33on').setView(viewCenter, viewZoom)
 
   # disable interactivity
