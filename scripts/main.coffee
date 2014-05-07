@@ -179,13 +179,21 @@ $ ->
   # make somebodies markers appear
   show_markers = (name) ->
     if name is "andy"
-      markers_data = window.andy_markers
+      markers_layer = L.geoJson(window.andy_markers)
+      set_markers_icons markers_layer, "images/marker-icon-yellow.png"
     else if name is "madeleine"
-      markers_data = window.madeleine_markers
+      markers_layer = L.geoJson(window.madeleine_markers)
+      set_markers_icons markers_layer, "images/marker-icon-purple.png"
     else
       console.error "Unknown name " + name
-    marker_layers.push L.geoJson(markers_data).addTo(map)
+    marker_layers.push markers_layer.addTo(map)
 
+  set_markers_icons = (markers_layer, url) ->
+    console.log markers_layer
+    for marker_id of markers_layer._layers
+      marker = markers_layer._layers[marker_id]
+      console.log marker
+      marker.setIcon(L.icon({iconUrl: url}))
 
   marker_hit = (marker) ->
     # console.log "hit marker!"

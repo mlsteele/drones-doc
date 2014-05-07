@@ -1,7 +1,7 @@
 window.people =
   'andy':
     'display_name': 'Andy'
-    'zone_color': '#f00'
+    'zone_color': '#FFF000'
     'videos':
       'intro-video': 'vimeo_id': '94133250'
       'andy-people-word-drone': 'vimeo_id': '94127567'
@@ -12,7 +12,7 @@ window.people =
       'andy-future-uses': 'vimeo_id': '94127285'
   'madeleine':
     'display_name': 'Madeleine'
-    'zone_color': '#0f0'
+    'zone_color': '#A63BC6'
     'videos':
       'intro-video': 'vimeo_id': '94120142'
       'madeleine-next-big-step': 'vimeo_id': '94133251'
@@ -24,4 +24,4 @@ window.people =
       'madeleine-recreational-restrictions': 'vimeo_id': '94120312'
   'chris':
     'display_name': 'Chris'
-    'zone_color': '#00f'
+    'zone_color': '#E41B1B'
