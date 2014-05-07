@@ -26,4 +26,4 @@ window.people =
     'display_name': 'Chris'
     'zone_color': '#E41B1B'
     'videos':
-      'intro-video': '94301034'
+      'intro-video': 'vimeo_id': '94301034'
