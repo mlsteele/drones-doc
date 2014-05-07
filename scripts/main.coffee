@@ -189,16 +189,17 @@ $ ->
     marker_layers.push markers_layer.addTo(map)
 
   set_markers_icons = (markers_layer, url) ->
-    console.log markers_layer
+    # console.log markers_layer
     for marker_id of markers_layer._layers
       marker = markers_layer._layers[marker_id]
-      console.log marker
+      # console.log marker
       marker.setIcon(L.icon({iconUrl: url}))
 
   marker_hit = (marker) ->
     # console.log "hit marker!"
     if marker.has_been_hit != true
-      console.log marker
+      # console.log marker
+      marker.setIcon(L.icon({iconUrl: 'images/marker-icon-gray.png'}))
       marker.has_been_hit = true
       show_video marker.feature.properties['video-id']
 
