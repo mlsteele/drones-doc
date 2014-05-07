@@ -116,7 +116,7 @@ $ ->
   # setup map
   viewCenter = [42.3609, -71.0904]
   viewZoom = 18
-  map = L.mapbox.map('arena', 'seveneightn9ne.i60f72a6').setView(viewCenter, viewZoom)
+  map = L.mapbox.map('arena', 'seveneightn9ne.i60f72a6', {zoomControl: false}).setView(viewCenter, viewZoom)
   disable_map_interactivity(map)
 
   # create game objects
