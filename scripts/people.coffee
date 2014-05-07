@@ -25,3 +25,5 @@ window.people =
   'chris':
     'display_name': 'Chris'
     'zone_color': '#E41B1B'
+    'videos':
+      'intro-video': '94301034'
