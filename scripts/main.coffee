@@ -113,7 +113,8 @@ $ ->
 
   notifier = new Notifier $ "#notification-widget"
   window.notifier = notifier
-  NOTIFICATION_TIMEOUT = 2000 # milliseconds
+  NOTIFICATION_TIMEOUT = 4000 # milliseconds
+  pending_notification = undefined # string to notify on video close
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
@@ -173,7 +174,7 @@ $ ->
       show_markers(name)
       show_video window.people[name].videos['intro-video'].vimeo_id
       display_name = window.people[name].display_name
-      notifier.show "Congrats. You found #{display_name}! Try exploring some of their other videos nearby.", NOTIFICATION_TIMEOUT
+      pending_notification = "Congrats. You found #{display_name}! Try exploring some of their other videos nearby."
 
   # make somebodies markers appear
   show_markers = (name) ->
@@ -210,6 +211,8 @@ $ ->
       'href' : "http://vimeo.com/" + id,
       'afterClose': ->
         drone_running = true
+        if pending_notification
+          notifier.show pending_notification, NOTIFICATION_TIMEOUT
         return true
       })
 
