@@ -21,7 +21,7 @@ body {
   width: 50px;
   height: 50px;
   margin-left: -25px;
-  margin-top: 0;
+  margin-top: -25px;
   background-image: url("../images/drone-spritesheet.png");
 
   /*background-color: blue;*/
