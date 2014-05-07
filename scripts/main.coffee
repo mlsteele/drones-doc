@@ -37,6 +37,10 @@ class DroneModel
     if KeyboardStateHolder.getState 'right'
       @tilt.add Vec2 +thrust, 0
 
+  stop: ->
+    @vel = Vec2 0, 0
+    @tilt = Vec2 0, 0
+
 class DroneView
 
   constructor: (@model) ->
@@ -89,59 +93,6 @@ class DroneMarkerView
                             rotateY(#{ @model.vel.x * 10}deg)"
   point: ->
     @marker.getLatLng()
-
-# class AreaModel
-#   constructor: (x, y, name) ->
-#     @size = Vec2 x, y
-#     @color = "#000000"
-#     @name = name
-#     @pos = Vec2 0, 0
-#     @selected = false
-
-#   setColor: (color) ->
-#     @color = color
-#     @
-
-#   setPos: (x, y) ->
-#     @pos = Vec2 x, y
-#     @
-
-#   detectDrone: (droneModel) ->
-#     lastSelected = @selected
-
-#     droneX = droneModel.pos.x
-#     droneY = droneModel.pos.y
-#     if (droneX >= @pos.x && droneX <= (@pos.x + @size.x) && droneY >= @pos.y && droneY <= (@pos.y + @size.y))
-#       @selected = true
-#     else
-#       @selected = false
-
-#     if @selected and not lastSelected
-#       $(document).trigger 'enterArea'
-
-#     if not @selected and lastSelected
-#       $(document).trigger 'leaveArea'
-
-#     return @selected
-
-# class AreaView
-#   constructor: (model) ->
-#     @model = model
-#     @id = @model.name.replace(" ","-")
-#     @domElement = $ "<div class='area'>"
-#     $("#arena").append @domElement
-
-#   update: ->
-#     @domElement.width @model.size.x
-#     @domElement.height @model.size.y
-#     @domElement.css
-#       'border-color': @model.color
-#       'left': "#{@model.pos.x}px"
-#       'top': "#{@model.pos.y}px"
-#       'box-shadow': "0px 0px 25px #{@model.color}"
-
-#     if (!@model.selected)
-#       @domElement.css "box-shadow", "0px 0px 10px #{@model.color}"
 
 disable_map_interactivity = (map) ->
   map.keyboard.disable()
@@ -198,15 +149,12 @@ $ ->
 
       # check whether the drone hits a marker
       for marker_layer in marker_layers
-        # console.error marker_layer
         for marker_id of marker_layer._layers
           marker = marker_layer._layers[marker_id]
-          # console.log marker
-          # debugger
           if marker.getLatLng().distanceTo(droneView.point()) < 10
             marker_hit marker
-          # else if marker_id == "42"
-            # console.log marker.getLatLng().distanceTo(droneView.point())
+    else
+      droneModel.stop()
 
 
 
@@ -235,7 +183,7 @@ $ ->
   marker_hit = (marker) ->
     # console.log "hit marker!"
     if marker.has_been_hit != true
-      # console.log marker
+      console.log marker
       marker.has_been_hit = true
       show_video marker.feature.properties['video-id']
 
