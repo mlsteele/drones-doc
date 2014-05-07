@@ -194,7 +194,15 @@ $ ->
         inZone = leafletPip.pointInLayer(droneView.point(), zone, true)
         if (inZone.length != 0)
           # a hit, a very palpable hit!
-          marker_layers.push on_zone_hit name
+          on_zone_hit name
+
+      # check whether the drone hits a marker
+      for marker_layer in marker_layers
+        # console.log marker_layer
+        inLayer = leafletPip.pointInLayer(droneView.point(), marker_layer, true)
+        console.log inLayer
+        if inLayer.length != 0
+          marker_hit inLayer[0]
 
       # for marker_layer in marker_layers
       #   console.log marker_layers
@@ -221,11 +229,11 @@ $ ->
       markers_data = window.madeleine_markers
     else
       console.error "Unknown name " + name
-
-    return L.geoJson(markers_data).addTo(map)
+    marker_layers.push L.geoJson(markers_data).addTo(map)
 
 
   marker_hit = (marker) ->
+    console.log "hit marker!"
     # TODO
 
   # display a vimeo video
