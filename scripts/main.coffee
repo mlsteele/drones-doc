@@ -155,14 +155,14 @@ $ ->
       # sketchy boundary detection
       # drive the drone back towards safety
       BOUNDARY_PADDING = 75 # pixels
-      # if droneView.getScreenPosition().x < BOUNDARY_PADDING
-      #   droneModel.tilt = Vec2 DroneModel.TILT_MAX, 0
-      # if droneView.getScreenPosition().y < BOUNDARY_PADDING
-      #   droneModel.tilt = Vec2 0, DroneModel.TILT_MAX
-      # if droneView.getScreenPosition().x - $('#arena').width() > BOUNDARY_PADDING
-      #   droneModel.tilt = Vec2 -DroneModel.TILT_MAX, 0
-      # if droneView.getScreenPosition().y - $('#arena').height() > BOUNDARY_PADDING
-      #   droneModel.tilt = Vec2 0, -DroneModel.TILT_MAX
+      if droneView.getScreenPosition().x < BOUNDARY_PADDING
+        droneModel.tilt = Vec2 DroneModel.TILT_MAX, 0
+      if droneView.getScreenPosition().y < BOUNDARY_PADDING
+        droneModel.tilt = Vec2 0, DroneModel.TILT_MAX
+      if $('#arena').width() - droneView.getScreenPosition().x < BOUNDARY_PADDING
+        droneModel.tilt = Vec2 -DroneModel.TILT_MAX, 0
+      if $('#arena').height() - droneView.getScreenPosition().y < BOUNDARY_PADDING
+        droneModel.tilt = Vec2 0, -DroneModel.TILT_MAX
 
       # check whether the drone is in a zone
       for name of window.people
