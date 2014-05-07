@@ -121,6 +121,10 @@ $ ->
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
+  Mousetrap.bind 'enter', -> $("#continue").click()
+  Mousetrap.bind 'space', -> $("#continue").click()
+  Mousetrap.bind 'esc', -> $("#continue").click()
+
   # setup map
   viewCenter = [42.3609, -71.0904]
   viewZoom = 18
