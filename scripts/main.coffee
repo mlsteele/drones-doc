@@ -111,7 +111,7 @@ $ ->
 
   # introduction
   $("#continue").click ->
-    $("#intro").hide()
+    $("#intro").fadeOut()
     return false
 
   notifier = new Notifier $ "#notification-widget"
