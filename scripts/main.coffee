@@ -41,24 +41,24 @@ class DroneModel
     @vel = Vec2 0, 0
     @tilt = Vec2 0, 0
 
-class DroneView
+# class DroneView
 
-  constructor: (@model) ->
-    @domElement = $ "<div class='drone'>"
+#   constructor: (@model) ->
+#     @domElement = $ "<div class='drone'>"
 
-    $("#arena").append @domElement
+#     $("#arena").append @domElement
 
-    @domElement.sprite
-      fps: 40
-      no_of_frames: 10
+#     @domElement.sprite
+#       fps: 40
+#       no_of_frames: 10
 
-  update: ->
-    @domElement.css
-      'left': "#{@model.pos.x}px"
-      'top': "#{@model.pos.y}px"
-      '-webkit-transform': "perspective(50px)
-                            rotateX(#{-@model.vel.y * 10}deg)
-                            rotateY(#{ @model.vel.x * 10}deg)"
+#   update: ->
+#     @domElement.css
+#       'left': "#{@model.pos.x}px"
+#       'top': "#{@model.pos.y}px"
+#       '-webkit-transform': "perspective(50px)
+#                             rotateX(#{-@model.vel.y * 10}deg)
+#                             rotateY(#{ @model.vel.x * 10}deg)"
 
 class DroneMarkerView
   @PIXELS_PER_LAT = 0.000007
@@ -91,8 +91,11 @@ class DroneMarkerView
       '-webkit-transform': "perspective(50px)
                             rotateX(#{-@model.vel.y * 10}deg)
                             rotateY(#{ @model.vel.x * 10}deg)"
-  point: ->
+  getLatLng: ->
     @marker.getLatLng()
+
+  getScreenPosition: ->
+    Vec2 @domElement.position().left, @domElement.position().top
 
 disable_map_interactivity = (map) ->
   map.keyboard.disable()
@@ -144,10 +147,22 @@ $ ->
       droneModel.update()
       droneView.update()
 
+      # sketchy boundary detection
+      # drive the drone back towards safety
+      BOUNDARY_PADDING = 75 # pixels
+      # if droneView.getScreenPosition().x < BOUNDARY_PADDING
+      #   droneModel.tilt = Vec2 DroneModel.TILT_MAX, 0
+      # if droneView.getScreenPosition().y < BOUNDARY_PADDING
+      #   droneModel.tilt = Vec2 0, DroneModel.TILT_MAX
+      # if droneView.getScreenPosition().x - $('#arena').width() > BOUNDARY_PADDING
+      #   droneModel.tilt = Vec2 -DroneModel.TILT_MAX, 0
+      # if droneView.getScreenPosition().y - $('#arena').height() > BOUNDARY_PADDING
+      #   droneModel.tilt = Vec2 0, -DroneModel.TILT_MAX
+
       # check whether the drone is in a zone
       for name of window.people
         zone = zones[name]
-        inZone = leafletPip.pointInLayer(droneView.point(), zone, true)
+        inZone = leafletPip.pointInLayer(droneView.getLatLng(), zone, true)
         if (inZone.length != 0)
           # a hit, a very palpable hit!
           on_zone_hit name
@@ -156,10 +171,11 @@ $ ->
       for marker_layer in marker_layers
         for marker_id of marker_layer._layers
           marker = marker_layer._layers[marker_id]
-          if marker.getLatLng().distanceTo(droneView.point()) < 10
+          if marker.getLatLng().distanceTo(droneView.getLatLng()) < 10
             marker_hit marker
     else
       droneModel.stop()
+      droneView.update()
 
 
 
