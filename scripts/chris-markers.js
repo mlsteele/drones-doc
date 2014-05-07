@@ -134,11 +134,11 @@ window.chris_markers = {
 video_ids = [
   "94302522",
   "94302520",
-  "94300863", // chris ends here
-  "99999999",
-  "99999999",
-  "99999999",
-  "99999999",
+  "94300863", 
+  "94306265",
+  "94304773",
+  "94313552",
+  "94307555",
 ]
 for (i=0; i<video_ids.length; i++) {
   window.chris_markers["features"][i]["properties"]["video-id"] = video_ids[i]
