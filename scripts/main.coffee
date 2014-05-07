@@ -198,17 +198,17 @@ $ ->
 
       # check whether the drone hits a marker
       for marker_layer in marker_layers
-        # console.log marker_layer
-        inLayer = leafletPip.pointInLayer(droneView.point(), marker_layer, true)
-        console.log inLayer
-        if inLayer.length != 0
-          marker_hit inLayer[0]
+        # console.error marker_layer
+        for marker_id of marker_layer._layers
+          marker = marker_layer._layers[marker_id]
+          # console.log marker
+          # debugger
+          if marker.getLatLng().distanceTo(droneView.point()) < 10
+            marker_hit marker
+          # else if marker_id == "42"
+            # console.log marker.getLatLng().distanceTo(droneView.point())
 
-      # for marker_layer in marker_layers
-      #   console.log marker_layers
-      #   onLayer = leafletPip.pointInLayer(droneView.point(), marker_layer, true)
-      #   if onLayer.length != 0
-      #     marker_hit onLayer[0]
+
 
   # record which zones have already been visited
   already_visited_zone = {}
@@ -233,8 +233,11 @@ $ ->
 
 
   marker_hit = (marker) ->
-    console.log "hit marker!"
-    # TODO
+    # console.log "hit marker!"
+    if marker.has_been_hit != true
+      # console.log marker
+      marker.has_been_hit = true
+      show_video marker.feature.properties['video-id']
 
   # display a vimeo video
   show_video = (id) ->
@@ -255,6 +258,8 @@ $ ->
         drone_running = true
         return true
       })
+
+
 
 
   # start the main loop
