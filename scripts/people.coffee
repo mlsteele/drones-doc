@@ -1,5 +1,6 @@
 window.people =
   'andy':
+    'display_name': 'Andy'
     'zone_color': '#f00'
     'videos':
       'intro-video': 'vimeo_id': '94133250'
@@ -10,6 +11,7 @@ window.people =
       'andy-ban': 'vimeo_id': '94127399'
       'andy-future-uses': 'vimeo_id': '94127285'
   'madeleine':
+    'display_name': 'Madeleine'
     'zone_color': '#0f0'
     'videos':
       'intro-video': 'vimeo_id': '94120142'
@@ -21,4 +23,5 @@ window.people =
       'madeleine-the-word-drone': 'vimeo_id': '94120146'
       'madeleine-recreational-restrictions': 'vimeo_id': '94120312'
   'chris':
+    'display_name': 'Chris'
     'zone_color': '#00f'

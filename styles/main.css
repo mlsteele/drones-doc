@@ -1,5 +1,6 @@
 html, body { height: 100%; }
 body {
+  font-family: Ubuntu, Helvetica, Arial, sans-serif;
   margin: 0;
 }
 
@@ -44,7 +45,6 @@ body {
   background-color: rgba(255,255,255,0.9);
   border-radius: 20px;
   z-index: 40;
-  font-family: Ubuntu, Helvetica, Arial, sans-serif;
   color: #333;
 }
 #intro h1 {
@@ -73,3 +73,28 @@ body {
   height: 25px;
   background-image: url(/images/prop.png);
 }*/
+
+.notifier-widget {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+
+  opacity: 0;
+
+  padding: 10px 15px;
+  line-height: 1.5em;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 10px;
+
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  -ms-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+
+  z-index: 45;
+}
+
+.notifier-visible {
+  opacity: 1;
+}

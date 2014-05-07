@@ -111,6 +111,10 @@ $ ->
     $("#intro").hide()
     return false
 
+  notifier = new Notifier $ "#notification-widget"
+  window.notifier = notifier
+  NOTIFICATION_TIMEOUT = 2000 # milliseconds
+
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
   # setup map
@@ -168,6 +172,8 @@ $ ->
       already_visited_zone[name] = true
       show_markers(name)
       show_video window.people[name].videos['intro-video'].vimeo_id
+      display_name = window.people[name].display_name
+      notifier.show "Congrats. You found #{display_name}! Try exploring some of their other videos nearby.", NOTIFICATION_TIMEOUT
 
   # make somebodies markers appear
   show_markers = (name) ->
