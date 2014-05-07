@@ -190,7 +190,7 @@ $ ->
       show_markers(name)
       show_video window.people[name].videos['intro-video'].vimeo_id
       display_name = window.people[name].display_name
-      pending_notification = "Congrats. You found #{display_name}! Try exploring some of their other videos nearby."
+      pending_notification = "Congrats! You found #{display_name}! Try exploring some of their other videos nearby."
 
   # make somebodies markers appear
   show_markers = (name) ->
