@@ -107,7 +107,7 @@ disable_map_interactivity = (map) ->
 
 
 $ ->
-  console.log 'welcome'
+  # console.log 'welcome'
 
   # introduction
   $("#continue").click ->
@@ -117,7 +117,7 @@ $ ->
   notifier = new Notifier $ "#notification-widget"
   window.notifier = notifier
   NOTIFICATION_TIMEOUT = 4000 # milliseconds
-  pending_notification = undefined # string to notify on video close
+  # pending_notification = undefined # string to notify on video close
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
@@ -134,6 +134,7 @@ $ ->
   # create game objects
   droneModel = new DroneModel 100, 100
   droneView = new DroneMarkerView droneModel, map
+  achievements = []
 
   # add zones
   zones = {}
@@ -175,8 +176,13 @@ $ ->
       for marker_layer in marker_layers
         for marker_id of marker_layer._layers
           marker = marker_layer._layers[marker_id]
-          if marker.getLatLng().distanceTo(droneView.getLatLng()) < 10
-            marker_hit marker
+          if marker.getLatLng().distanceTo(droneView.getLatLng()) < 15
+            if marker.has_been_hit != true
+              marker_layer.seen_markers += 1
+              marker_hit marker
+              # console.log marker_layer
+              if marker_layer.seen_markers == marker_layer.max_markers
+                get_achievement "Explored all of #{marker_layer.name}'s videos!", ""
     else
       droneModel.stop()
       droneView.update()
@@ -194,18 +200,28 @@ $ ->
       show_markers(name)
       show_video window.people[name].videos['intro-video'].vimeo_id
       display_name = window.people[name].display_name
-      pending_notification = "Congrats! You found #{display_name}! Try exploring some of their other videos nearby."
+      get_achievement "Discovered #{display_name}!", "New videos have been revealed on the map!"
 
   # make somebodies markers appear
   show_markers = (name) ->
     if name is "andy"
       markers_layer = L.geoJson(window.andy_markers)
       set_markers_icons markers_layer, "images/marker-icon-yellow.png"
+      markers_layer.max_markers = 6
+      markers_layer.name = "Andy"
     else if name is "madeleine"
       markers_layer = L.geoJson(window.madeleine_markers)
       set_markers_icons markers_layer, "images/marker-icon-purple.png"
+      markers_layer.max_markers = 7
+      markers_layer.name = "Madeleine"
+    else if name is "chris"
+      markers_layer = L.geoJson(window.chris_markers)
+      set_markers_icons markers_layer, "images/marker-icon-red.png"
+      markers_layer.max_markers = 7
+      markers_layer.name = "Chris"
     else
       console.error "Unknown name " + name
+    markers_layer.seen_markers = 0
     marker_layers.push markers_layer.addTo(map)
 
   set_markers_icons = (markers_layer, url) ->
@@ -240,13 +256,24 @@ $ ->
       'href' : "http://vimeo.com/" + id,
       'afterClose': ->
         drone_running = true
-        if pending_notification
-          notifier.show pending_notification, NOTIFICATION_TIMEOUT
+        # if pending_notification
+          # notifier.show pending_notification, NOTIFICATION_TIMEOUT
         return true
       })
 
+  already_got_achievement = (title) ->
+    for achievement in achievements
+      if achievement == title
+        return true
+    return false
 
-
+  get_achievement = (title, info) ->
+    if achievements.length == 0 #first achievement
+      $("#achievements small").hide()
+      $("#achievements").append($("<ul>"))
+    if not already_got_achievement(title)
+      achievements.push title
+      $("#achievements ul").append($("<li>").html("<b>#{title}</b> #{info}"))
 
   # start the main loop
   refresh_display()

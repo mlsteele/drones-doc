@@ -109,14 +109,19 @@ body {
   left: 0;
   background-color: rgba(255, 255, 255, 0.9);
   border: solid 1px #3BA5DE;
+  border-width: 0 1px 1px 0;
   width: 250px;
+  border-radius: 0 0 10px 0;
 }
 #achievements h3 {
-  margin: 10px;
+  margin: 0;
+  padding: 10px;
   padding-bottom: 5px;
   margin-bottom: 5px;
   text-align: center;
-  border-bottom: solid 1px #3BA5DE;;
+  border-bottom: solid 1px #3BA5DE;
+  text-shadow: 1px 1px  5px #dedede;
+
 }
 #achievements small {
   color: #666;
@@ -124,4 +129,18 @@ body {
   display: block;
   margin: 10px auto;
   text-align: center;
+}
+#achievements ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#achievements li {
+  border-bottom: solid 1px #3BA5DE;
+  padding: 10px;
+  color: #666;
+  font-size: 14px;
+}
+#achievements li b {
+  color: #333;
 }
