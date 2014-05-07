@@ -49,7 +49,7 @@ body {
   z-index: 40;
   color: #333;
 }
-#intro h1 {
+#intro h1, #achievements h3 {
   color: #3BA5DE;
   text-shadow: 1px 1px  5px #ccc;
   margin-top: 5px;
@@ -101,4 +101,15 @@ body {
 .notifier-visible {
   top: 15px;
   opacity: 1;
+}
+
+#achievements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: solid 1px #3BA5DE;
+}
+#achievements h3 {
+  margin: 10px;
 }
