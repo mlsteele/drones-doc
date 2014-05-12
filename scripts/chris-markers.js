@@ -1,4 +1,6 @@
-window.chris_markers = {
+(function(){
+
+var chris_markers = {
   "features": [
     {
       "geometry": {
@@ -131,15 +133,22 @@ window.chris_markers = {
   "type": "FeatureCollection"
 }
 
-video_ids = [
-  "94302522",
-  "94302520",
-  "94300863", 
-  "94306265",
-  "94304773",
-  "94313552",
-  "94307555",
+var video_ids = [
+  'chris-environmental-applications',
+  'chris-media-portrayal',
+  'chris-excited',
+  'chris-next-big-step-cities',
+  'chris-senseable-projects',
+  'chris-civic-applications',
+  'chris-drone-tours'
 ]
+
 for (i=0; i<video_ids.length; i++) {
-  window.chris_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  chris_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  chris_markers["features"][i]["properties"]["video-person-name"] = 'chris'
 }
+
+window.people_markers = window.people_markers || {};
+window.people_markers['chris'] = chris_markers
+
+}).call(this);

@@ -1,4 +1,6 @@
-window.andy_markers = {
+(function(){
+
+var andy_markers = {
   "features": [
     {
       "geometry": {
@@ -131,14 +133,21 @@ window.andy_markers = {
   "type": "FeatureCollection"
 }
 
-video_ids = [
-  "94127567",
-  "94127568",
-  "94127569",
-  "94127335",
-  "94127399",
-  "94127285",
+var video_ids = [
+  'andy-people-word-drone',
+  'andy-research',
+  'andy-the-word-drone',
+  'andy-amazon-air',
+  'andy-ban',
+  'andy-future-uses'
 ]
+
 for (i=0; i<video_ids.length; i++) {
-  window.andy_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  andy_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  andy_markers["features"][i]["properties"]["video-person-name"] = 'andy'
 }
+
+window.people_markers = window.people_markers || {};
+window.people_markers['andy'] = andy_markers
+
+}).call(this);

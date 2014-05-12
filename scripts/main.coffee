@@ -204,41 +204,34 @@ $ ->
 
   # make somebodies markers appear
   show_markers = (name) ->
-    if name is "andy"
-      markers_layer = L.geoJson(window.andy_markers)
-      set_markers_icons markers_layer, "images/marker-icon-yellow.png"
-      markers_layer.max_markers = 6
-      markers_layer.name = "Andy"
-    else if name is "madeleine"
-      markers_layer = L.geoJson(window.madeleine_markers)
-      set_markers_icons markers_layer, "images/marker-icon-purple.png"
-      markers_layer.max_markers = 7
-      markers_layer.name = "Madeleine"
-    else if name is "chris"
-      markers_layer = L.geoJson(window.chris_markers)
-      set_markers_icons markers_layer, "images/marker-icon-red.png"
-      markers_layer.max_markers = 7
-      markers_layer.name = "Chris"
-    else
-      console.error "Unknown name " + name
+    console.log "show_markers(#{name})"
+    marker_data = window.people_markers[name]
+    markers_layer = L.geoJson(marker_data)
+    set_markers_icons markers_layer, window.people[name].marker_color
+    markers_layer.name = window.people[name].display_name
+    markers_layer.max_markers = marker_data['features'].length
     markers_layer.seen_markers = 0
     marker_layers.push markers_layer.addTo(map)
 
-  set_markers_icons = (markers_layer, url) ->
+  set_markers_icons = (markers_layer, color) ->
     # console.log markers_layer
     for marker_id of markers_layer._layers
       marker = markers_layer._layers[marker_id]
+      name = marker.feature.properties['video-person-name']
+      video_shortname = marker.feature.properties['video-id']
+      label = window.people[name].videos[video_shortname].vimeo_id
       marker.setIcon new L.HtmlIcon
-        html: "<div class='marker-icon-yellow'></div>"
+        html: "<div class='marker-vid marker-icon-#{color}'><div class='marker-vid-label'>#{label}</div>"
 
   marker_hit = (marker) ->
     # console.log "hit marker!"
     if marker.has_been_hit != true
-      # console.log marker
       marker.setIcon new L.HtmlIcon
-        html: "<div class='marker-icon-gray'></div>"
+        html: "<div class='marker-vid marker-icon-gray'></div>"
       marker.has_been_hit = true
-      show_video marker.feature.properties['video-id']
+      name = marker.feature.properties['video-person-name']
+      video_shortname = marker.feature.properties['video-id']
+      show_video window.people[name].videos[video_shortname].vimeo_id
 
   # display a vimeo video
   show_video = (id) ->

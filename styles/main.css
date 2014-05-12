@@ -76,11 +76,30 @@ body {
   background-image: url(/images/prop.png);
 }*/
 
+.marker-vid {
+  position: absolute;
+  left: -12px;
+}
+
 .marker-icon-yellow {
   position: absolute;
   width: 25px;
   height: 41px;
   background-image: url("../images/marker-icon-yellow.png");
+}
+
+.marker-icon-purple {
+  position: absolute;
+  width: 25px;
+  height: 41px;
+  background-image: url("../images/marker-icon-purple.png");
+}
+
+.marker-icon-red {
+  position: absolute;
+  width: 25px;
+  height: 41px;
+  background-image: url("../images/marker-icon-red.png");
 }
 
 .marker-icon-gray {

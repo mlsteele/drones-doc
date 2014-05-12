@@ -1,4 +1,6 @@
-window.madeleine_markers = {
+(function(){
+
+var madeleine_markers = {
   "features": [
     {
       "geometry": {
@@ -108,24 +110,6 @@ window.madeleine_markers = {
       },
       "type": "Feature"
     },
-    {
-      "geometry": {
-        "coordinates": [
-          -71.08701467514038,
-          42.35996697714706
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "description": "",
-        "id": "marker-huvbmfun6",
-        "marker-color": "#9c89cc",
-        "marker-size": "medium",
-        "marker-symbol": "",
-        "title": ""
-      },
-      "type": "Feature"
-    },
     // {
     //   "geometry": {
     //     "coordinates": [
@@ -149,15 +133,21 @@ window.madeleine_markers = {
   "type": "FeatureCollection"
 }
 
-video_ids = [
-  "94133251",
-  "94121053",
-  "94120140",
-  "94120141",
-  "94120144",
-  "94120146",
-  "94120312"
+var video_ids = [
+  'madeleine-next-big-step',
+  'madeleine-military',
+  'madeleine-ban',
+  'madeleine-everyday-life',
+  'madeleine-media-portrayal',
+  'madeleine-the-word-drone'
 ]
+
 for (i=0; i<video_ids.length; i++) {
-  window.madeleine_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  madeleine_markers["features"][i]["properties"]["video-id"] = video_ids[i]
+  madeleine_markers["features"][i]["properties"]["video-person-name"] = 'madeleine'
 }
+
+window.people_markers = window.people_markers || {};
+window.people_markers['madeleine'] = madeleine_markers
+
+}).call(this);
