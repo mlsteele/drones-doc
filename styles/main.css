@@ -81,6 +81,23 @@ body {
   left: -12px;
 }
 
+.marker-vid-label {
+  position: relative;
+  bottom: 43px;
+  right: 35px;
+  width: 100px;
+  padding: 5px 6px;
+
+  color: #333;
+  font-family: Ubuntu, Helvetica, Arial, sans-serif;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5em;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
 .marker-icon-yellow {
   position: absolute;
   width: 25px;

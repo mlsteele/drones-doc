@@ -219,7 +219,7 @@ $ ->
       marker = markers_layer._layers[marker_id]
       name = marker.feature.properties['video-person-name']
       video_shortname = marker.feature.properties['video-id']
-      label = window.people[name].videos[video_shortname].vimeo_id
+      label = window.people[name].videos[video_shortname].label
       marker.setIcon new L.HtmlIcon
         html: "<div class='marker-vid marker-icon-#{color}'><div class='marker-vid-label'>#{label}</div>"
 
