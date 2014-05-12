@@ -228,14 +228,15 @@ $ ->
     # console.log markers_layer
     for marker_id of markers_layer._layers
       marker = markers_layer._layers[marker_id]
-      # console.log marker
-      marker.setIcon(L.icon({iconUrl: url}))
+      marker.setIcon new L.HtmlIcon
+        html: "<div class='marker-icon-yellow'></div>"
 
   marker_hit = (marker) ->
     # console.log "hit marker!"
     if marker.has_been_hit != true
       # console.log marker
-      marker.setIcon(L.icon({iconUrl: 'images/marker-icon-gray.png'}))
+      marker.setIcon new L.HtmlIcon
+        html: "<div class='marker-icon-gray'></div>"
       marker.has_been_hit = true
       show_video marker.feature.properties['video-id']
 

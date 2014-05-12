@@ -76,6 +76,20 @@ body {
   background-image: url(/images/prop.png);
 }*/
 
+.marker-icon-yellow {
+  position: absolute;
+  width: 25px;
+  height: 41px;
+  background-image: url("../images/marker-icon-yellow.png");
+}
+
+.marker-icon-gray {
+  position: absolute;
+  width: 25px;
+  height: 41px;
+  background-image: url("../images/marker-icon-gray.png");
+}
+
 .notifier-widget {
   position: absolute;
   top: 150px;
