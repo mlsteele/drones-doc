@@ -286,7 +286,7 @@ $ ->
         return true
       })
 
-  show_video(9530175295301752)
+  show_video(95301752)
   already_got_achievement = (title) ->
     for achievement in achievements
       if achievement == title
