@@ -42,7 +42,7 @@ var andy_markers = {
       "geometry": {
         "coordinates": [
           -71.08976662158966,
-          42.36133847489044
+          42.36083847489044
         ],
         "type": "Point"
       },

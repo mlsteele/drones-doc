@@ -42,7 +42,7 @@ var madeleine_markers = {
       "geometry": {
         "coordinates": [
           -71.08756184577942,
-          42.36018102789931
+          42.35958102789931
         ],
         "type": "Point"
       },
