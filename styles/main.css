@@ -125,6 +125,24 @@ body {
   height: 41px;
   background-image: url("../images/marker-icon-gray.png");
 }
+.highlight {
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px 10px #FFF;
+    /*background-color: yellow;*/
+    /*box-shadow: 10px 10px yellow;*/
+    /*background-size: 30px;
+    width: 35px;
+    height: 51px;
+    margin-top: -10px;
+    margin-left: -10px;
+    background-repeat: none;
+
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;*/
+}
 
 .notifier-widget {
   position: absolute;

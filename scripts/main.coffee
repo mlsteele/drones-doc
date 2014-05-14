@@ -110,8 +110,6 @@ $ ->
   # console.log 'welcome'
 
   # introduction
-  # show_video(9530175295301752)
-
   $("#continue").click ->
     $("#intro").fadeOut()
     return false
@@ -123,9 +121,6 @@ $ ->
 
   KeyboardStateHolder.subscribe ['up', 'down', 'left', 'right']
 
-  Mousetrap.bind 'enter', -> $("#continue").click()
-  Mousetrap.bind 'space', -> $("#continue").click()
-  Mousetrap.bind 'esc', -> $("#continue").click()
 
   # setup map
   viewCenter = [42.3609, -71.0904]
@@ -223,7 +218,7 @@ $ ->
       video_shortname = marker.feature.properties['video-id']
       label = window.people[name].videos[video_shortname].label
       marker.setIcon new L.HtmlIcon
-        html: "<div class='marker-vid marker-icon-#{color}'><div class='marker-vid-label'>#{label}</div>"
+        html: "<div class='marker-vid marker-icon-#{color}'><div class='#{video_shortname}-label marker-vid-label'>#{label}</div>"
 
   marker_hit = (marker) ->
     # console.log "hit marker!"
@@ -232,8 +227,38 @@ $ ->
         html: "<div class='marker-vid marker-icon-gray'></div>"
       marker.has_been_hit = true
       name = marker.feature.properties['video-person-name']
+      #   console.log name
       video_shortname = marker.feature.properties['video-id']
+      #   console.log video_shortname
+      label = window.people[name].videos[video_shortname].label
+      #   highlight_markers_with_label label
+      highlight_similar_markers video_shortname
       show_video window.people[name].videos[video_shortname].vimeo_id
+
+  highlight_similar_markers = (video_shortname) ->
+    # outerloop:
+    shortnames = false
+    for category of window.marker_relationships
+      for sn in window.marker_relationships[category]
+        $(".#{sn}-label").removeClass("highlight")
+        if sn == video_shortname
+          shortnames = window.marker_relationships[category]
+    if shortnames
+      for shortname in shortnames
+        $(".#{shortname}-label").addClass("highlight")
+    # for marker_layer in marker_layers
+    #   for marker_id of marker_layer._layers
+    #     marker = marker_layer._layers[marker_id]
+    #     name = marker.feature.properties['video-person-name']
+    #     color = window.people[name].marker_color
+    #     video_shortname = marker.feature.properties['video-id']
+    #     this_label = window.people[name].videos[video_shortname].label
+    #     if video_shortname in shortnames
+    #       marker.setIcon new L.HtmlIcon
+    #         html: "<div class='highlight marker-vid marker-icon-#{color}'><div class='marker-vid-label'>#{this_label}</div>"
+    #     else
+    #       marker.setIcon new L.HtmlIcon
+    #         html: "<div class='marker-vid marker-icon-#{color}'><div class='marker-vid-label'>#{this_label}</div>"
 
   # display a vimeo video
   show_video = (id) ->
@@ -254,6 +279,10 @@ $ ->
         drone_running = true
         # if pending_notification
           # notifier.show pending_notification, NOTIFICATION_TIMEOUT
+
+        Mousetrap.bind 'enter', -> $("#continue").click()
+        Mousetrap.bind 'space', -> $("#continue").click()
+        Mousetrap.bind 'esc', -> $("#continue").click()
         return true
       })
 
